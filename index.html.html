@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LuxeStay Hotels — Best Rate Guaranteed</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:      #0d0d0d;
+      --paper:    #faf8f4;
+      --gold:     #b8975a;
+      --gold-lt:  #d4b47a;
+      --mist:     #e8e3d9;
+      --sage:     #4a5c4e;
+      --white:    #ffffff;
+      --shadow:   rgba(13,13,13,.12);
+      --display:  'Cormorant Garamond', serif;
+      --body:     'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--body); background: var(--paper); color: var(--ink); overflow-x: hidden; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem 1.5rem 4rem;
+      background:
+        linear-gradient(to bottom, rgba(13,13,13,.55) 0%, rgba(13,13,13,.3) 60%, rgba(13,13,13,.7) 100%),
+        url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1800&auto=format&fit=crop&q=80') center/cover no-repeat;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      font-family: var(--body);
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--gold-lt);
+      border: 1px solid var(--gold);
+      padding: .35rem 1rem;
+      border-radius: 2rem;
+      margin-bottom: 1.8rem;
+      backdrop-filter: blur(4px);
+      background: rgba(184,151,90,.12);
+    }
+
+    .hero h1 {
+      font-family: var(--display);
+      font-size: clamp(2.8rem, 7vw, 6rem);
+      font-weight: 300;
+      line-height: 1.05;
+      color: var(--white);
+      max-width: 760px;
+      margin-bottom: 1.2rem;
+    }
+    .hero h1 em { font-style: italic; color: var(--gold-lt); }
+
+    .hero-sub {
+      font-size: clamp(.95rem, 2vw, 1.1rem);
+      font-weight: 300;
+      color: rgba(255,255,255,.82);
+      max-width: 480px;
+      line-height: 1.7;
+      margin-bottom: 2.8rem;
+    }
+
+    /* ── CALL BUTTON ── */
+    .cta-call {
+      display: inline-flex;
+      align-items: center;
+      gap: .7rem;
+      background: var(--gold);
+      color: var(--white);
+      text-decoration: none;
+      font-family: var(--body);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      padding: 1rem 2.2rem;
+      border-radius: 3rem;
+      border: none;
+      cursor: pointer;
+      transition: background .22s, transform .18s, box-shadow .22s;
+      box-shadow: 0 6px 28px rgba(184,151,90,.45);
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-call::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,.12);
+      opacity: 0;
+      transition: opacity .2s;
+    }
+    .cta-call:hover { background: #c9a464; transform: translateY(-2px); box-shadow: 0 10px 36px rgba(184,151,90,.55); }
+    .cta-call:hover::before { opacity: 1; }
+    .cta-call:active { transform: translateY(0); }
+
+    .cta-call svg { flex-shrink: 0; animation: ring 2.8s ease-in-out infinite; }
+    @keyframes ring {
+      0%,100% { transform: rotate(0); }
+      10%      { transform: rotate(-15deg); }
+      20%      { transform: rotate(15deg); }
+      30%      { transform: rotate(-10deg); }
+      40%      { transform: rotate(0); }
+    }
+
+    .cta-sub {
+      margin-top: .9rem;
+      font-size: .78rem;
+      color: rgba(255,255,255,.6);
+      letter-spacing: .05em;
+    }
+
+    /* pulse ring around button */
+    .cta-wrap { position: relative; display: inline-block; }
+    .pulse-ring {
+      position: absolute;
+      inset: -8px;
+      border-radius: 3rem;
+      border: 2px solid var(--gold-lt);
+      opacity: 0;
+      animation: pulse 2.6s ease-out infinite;
+      pointer-events: none;
+    }
+    .pulse-ring:nth-child(2) { animation-delay: .8s; }
+    @keyframes pulse {
+      0%   { transform: scale(.92); opacity: .7; }
+      100% { transform: scale(1.18); opacity: 0; }
+    }
+
+    /* ── TRUST BAR ── */
+    .trust-bar {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: .5rem 2rem;
+      margin-top: 3rem;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: .45rem;
+      font-size: .78rem;
+      font-weight: 500;
+      color: rgba(255,255,255,.75);
+      letter-spacing: .04em;
+    }
+    .trust-item span.dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); display: inline-block; }
+
+    /* ── BOOKING FORM ── */
+    .form-section {
+      background: var(--white);
+      padding: 0 1.5rem;
+    }
+    .form-card {
+      max-width: 860px;
+      margin: 0 auto;
+      transform: translateY(-52px);
+      background: var(--white);
+      border-radius: 1.2rem;
+      box-shadow: 0 16px 60px rgba(13,13,13,.13);
+      padding: 2rem 2.2rem;
+    }
+    .form-card h2 {
+      font-family: var(--display);
+      font-size: 1.6rem;
+      font-weight: 400;
+      margin-bottom: 1.4rem;
+      color: var(--ink);
+      border-bottom: 1px solid var(--mist);
+      padding-bottom: .9rem;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+    }
+    .form-group { display: flex; flex-direction: column; gap: .4rem; }
+    .form-group label { font-size: .72rem; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: #888; }
+    .form-group input, .form-group select {
+      border: 1.5px solid var(--mist);
+      border-radius: .5rem;
+      padding: .72rem .9rem;
+      font-family: var(--body);
+      font-size: .93rem;
+      color: var(--ink);
+      background: var(--paper);
+      outline: none;
+      transition: border-color .18s;
+      appearance: none;
+    }
+    .form-group input:focus, .form-group select:focus { border-color: var(--gold); }
+    .form-submit {
+      margin-top: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn-check {
+      flex: 1;
+      min-width: 180px;
+      padding: .88rem 1.6rem;
+      background: var(--sage);
+      color: var(--white);
+      font-family: var(--body);
+      font-size: .95rem;
+      font-weight: 600;
+      border: none;
+      border-radius: .6rem;
+      cursor: pointer;
+      transition: background .2s, transform .15s;
+    }
+    .btn-check:hover { background: #3a4c3e; transform: translateY(-1px); }
+    .or-divider { font-size: .8rem; color: #aaa; }
+    .btn-call-sm {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .88rem 1.4rem;
+      border: 2px solid var(--gold);
+      color: var(--gold);
+      background: transparent;
+      font-family: var(--body);
+      font-size: .92rem;
+      font-weight: 600;
+      border-radius: .6rem;
+      text-decoration: none;
+      transition: all .2s;
+      white-space: nowrap;
+    }
+    .btn-call-sm:hover { background: var(--gold); color: var(--white); }
+
+    /* ── SECTION SHELL ── */
+    section { padding: 5rem 1.5rem; }
+    .section-inner { max-width: 1080px; margin: 0 auto; }
+    .eyebrow {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: .8rem;
+    }
+    .section-title {
+      font-family: var(--display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 300;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .section-desc { font-size: .97rem; color: #555; line-height: 1.75; max-width: 540px; }
+
+    /* ── WHY US ── */
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.8rem;
+      margin-top: 3rem;
+    }
+    .why-card {
+      background: var(--paper);
+      border: 1px solid var(--mist);
+      border-radius: 1rem;
+      padding: 1.8rem 1.6rem;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .why-card:hover { box-shadow: 0 8px 30px var(--shadow); transform: translateY(-3px); }
+    .why-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-lt));
+      border-radius: 1rem 1rem 0 0;
+    }
+    .why-icon { font-size: 1.8rem; margin-bottom: .9rem; }
+    .why-card h3 { font-family: var(--display); font-size: 1.25rem; font-weight: 600; margin-bottom: .5rem; }
+    .why-card p { font-size: .87rem; color: #666; line-height: 1.65; }
+
+    /* ── ROOMS ── */
+    .rooms-section { background: var(--ink); }
+    .rooms-section .section-title, .rooms-section .section-desc { color: var(--white); }
+    .rooms-section .section-desc { color: rgba(255,255,255,.6); }
+    .rooms-section .eyebrow { color: var(--gold-lt); }
+    .rooms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .room-card {
+      border-radius: .9rem;
+      overflow: hidden;
+      background: #1a1a1a;
+      transition: transform .2s;
+      cursor: pointer;
+    }
+    .room-card:hover { transform: scale(1.02); }
+    .room-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+    .room-body { padding: 1.3rem; }
+    .room-type { font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); font-weight: 600; }
+    .room-name { font-family: var(--display); font-size: 1.3rem; color: var(--white); margin: .25rem 0 .5rem; }
+    .room-price { font-size: .9rem; color: rgba(255,255,255,.5); }
+    .room-price strong { font-size: 1.2rem; color: var(--white); }
+    .room-cta {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: .5rem 1.2rem;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      border-radius: 2rem;
+      font-size: .8rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all .2s;
+    }
+    .room-cta:hover { background: var(--gold); color: var(--white); }
+
+    /* ── TESTIMONIALS ── */
+    .test-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .test-card {
+      background: var(--white);
+      border-radius: 1rem;
+      padding: 1.8rem;
+      box-shadow: 0 4px 20px rgba(13,13,13,.07);
+      position: relative;
+    }
+    .stars { color: var(--gold); font-size: 1rem; margin-bottom: .8rem; }
+    .test-text { font-size: .9rem; line-height: 1.7; color: #444; font-style: italic; margin-bottom: 1rem; }
+    .test-author { display: flex; align-items: center; gap: .7rem; }
+    .test-avatar {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--sage));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; color: var(--white); font-size: .85rem;
+    }
+    .test-name { font-size: .88rem; font-weight: 600; }
+    .test-loc { font-size: .75rem; color: #999; }
+
+    /* ── CTA BANNER ── */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--sage) 0%, #2e3e31 100%);
+      padding: 5rem 1.5rem;
+      text-align: center;
+    }
+    .cta-banner h2 {
+      font-family: var(--display);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--white);
+      font-weight: 300;
+      margin-bottom: .9rem;
+    }
+    .cta-banner h2 em { color: var(--gold-lt); font-style: italic; }
+    .cta-banner p { color: rgba(255,255,255,.7); max-width: 440px; margin: 0 auto 2.5rem; line-height: 1.75; }
+    .banner-actions { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .cta-call-lg {
+      display: inline-flex;
+      align-items: center;
+      gap: .75rem;
+      background: var(--gold);
+      color: var(--white);
+      text-decoration: none;
+      font-size: 1.05rem;
+      font-weight: 700;
+      padding: 1.1rem 2.4rem;
+      border-radius: 3rem;
+      box-shadow: 0 8px 32px rgba(184,151,90,.5);
+      transition: all .2s;
+      letter-spacing: .03em;
+    }
+    .cta-call-lg:hover { background: #c9a464; transform: translateY(-2px); }
+    .cta-call-lg svg { animation: ring 2.8s ease-in-out infinite; }
+    .banner-note { font-size: .78rem; color: rgba(255,255,255,.45); margin-top: .8rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: var(--display);
+      font-size: 1.6rem;
+      color: var(--gold);
+      letter-spacing: .08em;
+      margin-bottom: .5rem;
+    }
+    footer p { font-size: .78rem; color: rgba(255,255,255,.35); }
+
+    /* ── STICKY CALL BAR ── */
+    .sticky-bar {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: var(--ink);
+      padding: .9rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      z-index: 999;
+      transform: translateY(100%);
+      transition: transform .35s cubic-bezier(.4,0,.2,1);
+      box-shadow: 0 -4px 24px rgba(0,0,0,.25);
+    }
+    .sticky-bar.visible { transform: translateY(0); }
+    .sticky-text { font-size: .85rem; color: rgba(255,255,255,.7); }
+    .sticky-text strong { color: var(--white); }
+    .sticky-call {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: var(--gold);
+      color: var(--white);
+      text-decoration: none;
+      font-size: .9rem;
+      font-weight: 700;
+      padding: .65rem 1.5rem;
+      border-radius: 2rem;
+      white-space: nowrap;
+      transition: background .2s;
+    }
+    .sticky-call:hover { background: var(--gold-lt); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .form-card { padding: 1.5rem 1.2rem; transform: translateY(-36px); }
+      .form-submit { flex-direction: column; }
+      .btn-check, .btn-call-sm { width: 100%; text-align: center; justify-content: center; }
+      .or-divider { display: none; }
+      .sticky-text { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cta-call svg, .cta-call-lg svg { animation: none; }
+      .pulse-ring { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">★ Best Rate Guaranteed · No Booking Fees</div>
+    <h1>Your Perfect Stay<br><em>Awaits a Single Call</em></h1>
+    <p class="hero-sub">Skip the search. Our travel specialists hand-pick rooms, unlock unpublished rates, and have you confirmed in minutes.</p>
+
+    <div class="cta-wrap">
+      <div class="pulse-ring"></div>
+      <div class="pulse-ring"></div>
+      <a href="tel:+18884739483" class="cta-call">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+        </svg>
+        Call Now: +1-888-473-9483
+      </a>
+    </div>
+    <p class="cta-sub">Available 24 / 7 · Avg. wait under 30 seconds</p>
+
+    <div class="trust-bar">
+      <span class="trust-item"><span class="dot"></span> 4.9★ Guest Rating</span>
+      <span class="trust-item"><span class="dot"></span> 50,000+ Bookings</span>
+      <span class="trust-item"><span class="dot"></span> Free Cancellation</span>
+      <span class="trust-item"><span class="dot"></span> Best Price Match</span>
+    </div>
+  </section>
+
+  <!-- BOOKING FORM -->
+  <div class="form-section">
+    <div class="form-card">
+      <h2>Check Availability</h2>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Destination</label>
+          <input type="text" placeholder="City or hotel name" />
+        </div>
+        <div class="form-group">
+          <label>Check-in</label>
+          <input type="date" />
+        </div>
+        <div class="form-group">
+          <label>Check-out</label>
+          <input type="date" />
+        </div>
+        <div class="form-group">
+          <label>Guests</label>
+          <select>
+            <option>1 Guest</option>
+            <option>2 Guests</option>
+            <option>3 Guests</option>
+            <option>4+ Guests</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Room Type</label>
+          <select>
+            <option>Any Room</option>
+            <option>Standard</option>
+            <option>Deluxe</option>
+            <option>Suite</option>
+            <option>Penthouse</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-submit">
+        <button class="btn-check" onclick="handleSearch()">Search Rooms</button>
+        <span class="or-divider">— or —</span>
+        <a href="tel:+18884739483" class="btn-call-sm">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+          </svg>
+          Call +1-888-473-9483
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHY US -->
+  <section style="background: var(--paper);">
+    <div class="section-inner">
+      <div class="eyebrow">Why LuxeStay</div>
+      <h2 class="section-title">More than a room.<br>An experience curated for you.</h2>
+      <p class="section-desc">Our concierge team works every call to secure the best rate, the right room, and extras you didn't know to ask for.</p>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon">💰</div>
+          <h3>Lowest Price, Always</h3>
+          <p>We match any lower rate you find within 24 hours — no questions, no forms, just a single call.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">🕐</div>
+          <h3>24 / 7 Live Specialists</h3>
+          <p>Real people, zero bots. Our specialists are on the phone around the clock, across every time zone.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">🎁</div>
+          <h3>Exclusive Perks</h3>
+          <p>Early check-in, late checkout, room upgrades, and welcome amenities — often unavailable online.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">🔓</div>
+          <h3>Free Cancellation</h3>
+          <p>Plans change. Cancel or modify most bookings up to 24 hours before arrival at no charge.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED ROOMS -->
+  <section class="rooms-section">
+    <div class="section-inner">
+      <div class="eyebrow">Featured Rooms</div>
+      <h2 class="section-title">Handpicked for every kind of traveler.</h2>
+      <p class="section-desc">Call us and tell us what you're looking for — we'll match you to the perfect room, including options not listed online.</p>
+      <div class="rooms-grid">
+        <div class="room-card">
+          <img class="room-img" src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&auto=format&fit=crop&q=75" alt="Deluxe King Room" />
+          <div class="room-body">
+            <div class="room-type">Most Popular</div>
+            <div class="room-name">Deluxe King Room</div>
+            <div class="room-price">From <strong>$199</strong> / night</div>
+            <a href="tel:+18884739483" class="room-cta">Book by Phone</a>
+          </div>
+        </div>
+        <div class="room-card">
+          <img class="room-img" src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=600&auto=format&fit=crop&q=75" alt="Skyline Suite" />
+          <div class="room-body">
+            <div class="room-type">Best Views</div>
+            <div class="room-name">Skyline Suite</div>
+            <div class="room-price">From <strong>$349</strong> / night</div>
+            <a href="tel:+18884739483" class="room-cta">Book by Phone</a>
+          </div>
+        </div>
+        <div class="room-card">
+          <img class="room-img" src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=600&auto=format&fit=crop&q=75" alt="Garden Penthouse" />
+          <div class="room-body">
+            <div class="room-type">Ultimate Luxury</div>
+            <div class="room-name">Garden Penthouse</div>
+            <div class="room-price">From <strong>$599</strong> / night</div>
+            <a href="tel:+18884739483" class="room-cta">Book by Phone</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section style="background: var(--paper);">
+    <div class="section-inner">
+      <div class="eyebrow">Guest Reviews</div>
+      <h2 class="section-title">Guests who called, never looked back.</h2>
+      <div class="test-grid">
+        <div class="test-card">
+          <div class="stars">★★★★★</div>
+          <p class="test-text">"I called expecting a standard booking — instead I got a suite upgrade and champagne on arrival. Absolutely unmatched service."</p>
+          <div class="test-author">
+            <div class="test-avatar">SR</div>
+            <div>
+              <div class="test-name">Sarah R.</div>
+              <div class="test-loc">New York, NY</div>
+            </div>
+          </div>
+        </div>
+        <div class="test-card">
+          <div class="stars">★★★★★</div>
+          <p class="test-text">"The phone specialist saved me $180 off what I found online and got me early check-in. I'll never book any other way."</p>
+          <div class="test-author">
+            <div class="test-avatar">JM</div>
+            <div>
+              <div class="test-name">James M.</div>
+              <div class="test-loc">Chicago, IL</div>
+            </div>
+          </div>
+        </div>
+        <div class="test-card">
+          <div class="stars">★★★★★</div>
+          <p class="test-text">"I needed a last-minute booking for an anniversary. One call, 10 minutes, perfect room with rose petals arranged. Magical."</p>
+          <div class="test-author">
+            <div class="test-avatar">LP</div>
+            <div>
+              <div class="test-name">Lauren P.</div>
+              <div class="test-loc">Austin, TX</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="cta-banner">
+    <div class="section-inner" style="text-align:center;">
+      <div class="eyebrow" style="color:var(--gold-lt);">Ready to Book?</div>
+      <h2>One call gets you<br><em>the best room at the best price.</em></h2>
+      <p>Our specialists are standing by right now. No hold music, no bots — just someone who genuinely loves getting you a great stay.</p>
+      <div class="banner-actions">
+        <div class="cta-wrap">
+          <div class="pulse-ring"></div>
+          <div class="pulse-ring"></div>
+          <a href="tel:+18884739483" class="cta-call-lg">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+            </svg>
+            +1-888-473-9483
+          </a>
+        </div>
+      </div>
+      <p class="banner-note">Available 24 hours · 7 days a week · Average wait: &lt; 30 seconds</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">LuxeStay</div>
+    <p>© 2026 LuxeStay Hotels. All rights reserved. Best rate guaranteed.</p>
+  </footer>
+
+  <!-- STICKY CALL BAR -->
+  <div class="sticky-bar" id="stickyBar">
+    <div class="sticky-text">
+      <strong>Talk to a specialist right now</strong> — best rates &amp; free upgrades
+    </div>
+    <a href="tel:+18884739483" class="sticky-call">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+      </svg>
+      Call Now
+    </a>
+  </div>
+
+  <script>
+    // Show sticky bar after scrolling past hero
+    const bar = document.getElementById('stickyBar');
+    window.addEventListener('scroll', () => {
+      bar.classList.toggle('visible', window.scrollY > window.innerHeight * 0.7);
+    }, { passive: true });
+
+    // Form search handler
+    function handleSearch() {
+      const dest = document.querySelector('input[type="text"]').value.trim();
+      if (!dest) {
+        alert('Please enter a destination to search.');
+        return;
+      }
+      // Redirect to call for lead capture
+      if (confirm(`We found availability in "${dest}"!\n\nCall our specialists now to lock in your exclusive rate:\n+1-888-473-9483\n\nPress OK to dial.`)) {
+        window.location.href = 'tel:+18884739483';
+      }
+    }
+  </script>
+</body>
+</html>
